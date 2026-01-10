@@ -91,9 +91,9 @@ export default function Home() {
             ORGANIZE YOUR DIGITAL WORLD
           </div>
           <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-foreground leading-[0.9] animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            Every link, <br />
+            Every link,  beautifully <br />
             <span className="italic font-serif text-primary/80">
-              beautifully
+            
             </span>{" "}
             archived.
           </h1>

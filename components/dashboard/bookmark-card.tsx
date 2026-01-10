@@ -11,6 +11,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
+import { useBookmarksStore } from "@/store/bookmarks-store";
+import { type Bookmark } from "@/mock-data/bookmarks";
+import { toast } from "sonner";
+import { EditBookmarkDialog } from "./edit-bookmark-dialog";
+import { DeleteConfirmDialog } from "@/components/delete-confirm-dialog";
+import { AddTagsDialog } from "./add-tags-dialog";
+import { BookmarkDetailsDialog } from "./bookmark-details-dialog";
 import {
   Heart,
   MoreHorizontal,
@@ -20,14 +28,8 @@ import {
   Trash2,
   Tag,
   Archive,
+  Info,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useBookmarksStore } from "@/store/bookmarks-store";
-import { type Bookmark } from "@/mock-data/bookmarks";
-import { toast } from "sonner";
-import { EditBookmarkDialog } from "./edit-bookmark-dialog";
-import { DeleteConfirmDialog } from "@/components/delete-confirm-dialog";
-import { AddTagsDialog } from "./add-tags-dialog";
 
 interface BookmarkCardProps {
   bookmark: Bookmark;
@@ -41,6 +43,7 @@ export function BookmarkCard({
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isTagDialogOpen, setIsTagDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isDetailsDialogOpen, setIsDetailsDialogOpen] = useState(false);
   const [deleteVariant, setDeleteVariant] = useState<
     "trash" | "permanent" | "archive"
   >("trash");
@@ -204,6 +207,10 @@ export function BookmarkCard({
                 <Copy className="size-4 mr-2" />
                 Copy URL
               </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setIsDetailsDialogOpen(true)}>
+                <Info className="size-4 mr-2" />
+                More Details
+              </DropdownMenuItem>
 
               {!isTrash && (
                 <>
@@ -286,6 +293,12 @@ export function BookmarkCard({
           open={isTagDialogOpen}
           onOpenChange={setIsTagDialogOpen}
         />
+
+        <BookmarkDetailsDialog
+          bookmark={bookmark}
+          open={isDetailsDialogOpen}
+          onOpenChange={setIsDetailsDialogOpen}
+        />
       </div>
     );
   }
@@ -322,6 +335,10 @@ export function BookmarkCard({
             <DropdownMenuItem onClick={handleCopyUrl}>
               <Copy className="size-4 mr-2" />
               Copy URL
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setIsDetailsDialogOpen(true)}>
+              <Info className="size-4 mr-2" />
+              More Details
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleOpenUrl}>
               <ExternalLink className="size-4 mr-2" />
@@ -450,6 +467,12 @@ export function BookmarkCard({
         bookmark={bookmark}
         open={isTagDialogOpen}
         onOpenChange={setIsTagDialogOpen}
+      />
+
+      <BookmarkDetailsDialog
+        bookmark={bookmark}
+        open={isDetailsDialogOpen}
+        onOpenChange={setIsDetailsDialogOpen}
       />
     </div>
   );
