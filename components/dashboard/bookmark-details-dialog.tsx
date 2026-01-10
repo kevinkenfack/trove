@@ -60,9 +60,8 @@ export function BookmarkDetailsDialog({
         <DrawerContent className="max-h-[90vh]">
           
           <div className="px-6 py-4 overflow-y-auto space-y-6">
-            {/* 1. Header Information */}
             <div className="flex items-center gap-4">
-              <div className="size-14 rounded-xl bg-muted/50 border border-border/50 flex items-center justify-center overflow-hidden shrink-0">
+              <div className="size-14 rounded-lg bg-secondary p-2 flex items-center justify-center overflow-hidden border border-border/60">
                 <img
                   src={bookmark.favicon}
                   alt={bookmark.title}
@@ -76,7 +75,7 @@ export function BookmarkDetailsDialog({
                 <DrawerTitle className="text-lg font-bold leading-tight truncate">{bookmark.title}</DrawerTitle>
                 <div className="flex flex-wrap items-center gap-2 mt-1">
                   {collection && (
-                    <Badge variant="secondary" className="h-5 px-1.5 bg-primary/5 text-primary border-primary/10 text-[10px] font-bold rounded-md">
+                    <Badge variant="secondary" className="h-5 px-1.5 bg-secondary text-muted-foreground border-none text-[10px] font-medium rounded-md">
                       <BookmarkIcon className="mr-1 size-2.5" />
                       {collection.name}
                     </Badge>
@@ -89,7 +88,6 @@ export function BookmarkDetailsDialog({
               </div>
             </div>
 
-            {/* 2. Description & Tags & URL */}
             <div className="space-y-4">
               {bookmark.description && (
                 <div className="space-y-1.5">
@@ -113,8 +111,8 @@ export function BookmarkDetailsDialog({
                     {bookmarkTags.map((tag) => (
                       <Badge
                         key={tag.id}
-                        variant="outline"
-                        className={cn("text-[10px] py-0.5 px-2 font-semibold bg-muted/20 border-border/50 rounded-md", tag.color)}
+                        variant="secondary"
+                        className={cn("text-[10px] py-0.5 px-2 font-normal rounded-md", tag.color)}
                       >
                         {tag.name}
                       </Badge>
@@ -132,34 +130,34 @@ export function BookmarkDetailsDialog({
                   href={bookmark.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-primary font-bold hover:underline underline-offset-4 break-all block truncate"
+                  className="text-sm text-primary hover:underline underline-offset-4 break-all block truncate font-medium"
                 >
                   {bookmark.url}
                 </a>
               </div>
             </div>
 
-            {/* 3. Preview Area */}
             <div className="space-y-3 pt-2 pb-8">
               <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
                 <Globe className="size-3.5" />
                 Preview Snapshot
               </h3>
-              <div className="relative h-[220px] w-full rounded-lg overflow-hidden border border-border/40 bg-muted/20 flex items-center justify-center">
+              <div className="relative overflow-hidden rounded-lg border border-border/60 bg-muted/40">
                 {!previewLoaded && !previewError && (
-                  <Skeleton className="absolute inset-0 size-full" />
+                  <Skeleton className="h-64 w-full" />
                 )}
                 {previewError ? (
-                  <div className="flex flex-col items-center gap-2 text-muted-foreground/40">
-                    <Info className="size-6" />
-                    <p className="text-[10px]">No preview available</p>
+                  <div className="flex h-64 flex-col items-center justify-center gap-2 text-muted-foreground/40">
+                    <Info className="size-8" />
+                    <p className="text-xs">Preview not available</p>
                   </div>
                 ) : (
                   <img
                     src={previewUrl}
-                    alt="preview"
+                    alt={`${bookmark.title} preview`}
+                    loading="lazy"
                     className={cn(
-                      "size-full object-cover transition-opacity rounded-lg",
+                      "w-full max-h-72 object-contain transition-opacity duration-300",
                       previewLoaded ? "opacity-100" : "opacity-0"
                     )}
                     onLoad={() => setPreviewLoaded(true)}
@@ -178,17 +176,16 @@ export function BookmarkDetailsDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[75vw] w-[70vw] h-[70vh] p-0 overflow-hidden border-border/50 bg-background rounded-xl shadow-2xl">
         <div className="grid grid-cols-[400px_1fr] h-full items-stretch">
-          {/* Left: Metadata Info */}
           <div className="p-10 border-r border-border/50 flex flex-col gap-8 overflow-y-auto">
             <div className="space-y-6">
               <div className="flex items-center gap-4">
-                <div className="size-14 rounded-xl bg-muted/50 border border-border/50 flex items-center justify-center overflow-hidden shrink-0">
+                <div className="size-14 rounded-lg bg-secondary p-2 flex items-center justify-center border border-border/60">
                   <Image
                     src={bookmark.favicon}
                     alt={bookmark.title}
                     width={40}
                     height={40}
-                    className={cn("size-8", bookmark.hasDarkIcon && "dark:invert")}
+                    className={cn("size-8 object-contain", bookmark.hasDarkIcon && "dark:invert")}
                   />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -197,7 +194,7 @@ export function BookmarkDetailsDialog({
                   </h2>
                   <div className="flex items-center gap-2 mt-2">
                     {collection && (
-                      <Badge variant="secondary" className="h-5 px-2 bg-primary/5 text-primary border-primary/10 text-[10px] font-bold rounded-md">
+                      <Badge variant="secondary" className="h-5 px-2 bg-secondary text-muted-foreground border-none text-[10px] font-medium rounded-md">
                         {collection.name}
                       </Badge>
                     )}
@@ -214,7 +211,7 @@ export function BookmarkDetailsDialog({
                   href={bookmark.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-primary font-bold hover:underline underline-offset-4 break-all block truncate"
+                  className="text-sm text-primary font-medium hover:underline underline-offset-4 break-all block truncate"
                 >
                   {bookmark.url}
                 </a>
@@ -244,8 +241,8 @@ export function BookmarkDetailsDialog({
                     {bookmarkTags.map((tag) => (
                       <Badge
                         key={tag.id}
-                        variant="outline"
-                        className={cn("text-[10px] py-0.5 px-2 font-semibold bg-muted/20 border-border/50 rounded-md", tag.color)}
+                        variant="secondary"
+                        className={cn("text-[10px] py-0.5 px-2 font-normal rounded-md", tag.color)}
                       >
                         {tag.name}
                       </Badge>
@@ -261,7 +258,6 @@ export function BookmarkDetailsDialog({
             </div>
           </div>
 
-          {/* Right: Compact Preview Area */}
           <div className="bg-muted/5 p-12 flex items-center justify-center overflow-hidden">
              <div className="w-full max-w-[500px] flex flex-col gap-6">
                 <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
@@ -269,7 +265,7 @@ export function BookmarkDetailsDialog({
                   Preview Snapshot
                 </h3>
 
-                <div className="relative h-[300px] w-full rounded-lg overflow-hidden border border-border/50 bg-muted/20 flex items-center justify-center group/preview">
+                <div className="relative overflow-hidden rounded-lg border border-border/60 bg-muted/40 w-full min-h-[300px] flex items-center justify-center">
                   {!previewLoaded && !previewError && (
                     <Skeleton className="absolute inset-0 size-full" />
                   )}
@@ -281,9 +277,9 @@ export function BookmarkDetailsDialog({
                   ) : (
                     <img
                       src={previewUrl}
-                      alt="Preview"
+                      alt={`${bookmark.title} preview`}
                       className={cn(
-                        "size-full object-cover transition-all duration-700 rounded-lg",
+                        "w-full max-h-[400px] object-contain transition-opacity duration-300",
                         previewLoaded ? "opacity-100" : "opacity-0"
                       )}
                       onLoad={() => setPreviewLoaded(true)}
