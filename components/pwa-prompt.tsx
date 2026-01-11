@@ -114,12 +114,11 @@ const PWAInstallPrompt = ({ delayMs = 10000 }: PWAInstallPromptProps) => {
           </Button>
         </div>
         <Button
-          size="sm"
           onClick={handleInstallClick}
           className="h-9 gap-2 w-full sm:w-auto"
         >
           <Download className="h-4 w-4" />
-          Install
+          Install Trove App
         </Button>
       </div>
     </div>
