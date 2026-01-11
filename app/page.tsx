@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { supabase } from "@/integrations/supabase/supabase";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
-  GalleryVerticalEnd,
   ArrowRight,
   Bookmark,
   Tag,
@@ -53,12 +53,26 @@ export default function Home() {
       {/* Header */}
       <header className="fixed top-0 w-full z-50 border-b bg-background/50 backdrop-blur-xl">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5 font-bold text-xl tracking-tight">
-            <div className="bg-primary text-primary-foreground flex size-9 items-center justify-center rounded-xl shadow-lg shadow-primary/10">
-              <GalleryVerticalEnd size={20} />
+          <Link href="/" className="flex items-center">
+            <div className="relative h-6 w-auto">
+              <Image
+                src="/logo-light.svg"
+                alt="Trove Logo"
+                width={120}
+                height={35}
+                className="object-contain dark:hidden"
+                priority
+              />
+              <Image
+                src="/logo-dark.svg"
+                alt="Trove Logo"
+                width={120}
+                height={35}
+                className="object-contain hidden dark:block"
+                priority
+              />
             </div>
-            Trove
-          </div>
+          </Link>
           <div className="flex items-center gap-2 md:gap-4">
             <Button
               variant="ghost"
@@ -187,11 +201,23 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t py-16 bg-muted/20">
         <div className="container mx-auto px-4 flex flex-col items-center gap-6">
-          <div className="flex items-center gap-2.5 font-bold text-xl opacity-80">
-            <div className="bg-primary text-primary-foreground p-2 rounded-lg">
-              <GalleryVerticalEnd size={18} />
+          <div className="flex items-center opacity-80">
+            <div className="relative h-6 w-auto">
+              <Image
+                src="/logo-light.svg"
+                alt="Trove Logo"
+                width={120}
+                height={35}
+                className="object-contain dark:hidden"
+              />
+              <Image
+                src="/logo-dark.svg"
+                alt="Trove Logo"
+                width={120}
+                height={35}
+                className="object-contain hidden dark:block"
+              />
             </div>
-            Trove
           </div>
           <div className="flex gap-6 text-sm text-muted-foreground font-medium">
             <Link href="#" className="hover:text-primary transition-colors">

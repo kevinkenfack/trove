@@ -1,5 +1,5 @@
-import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { LoginForm } from "@/components/login-form";
 import { AuthHero } from "@/components/auth-hero";
 import { Metadata } from "next";
@@ -39,18 +39,29 @@ export default function LoginPage() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10 bg-background">
-        <div className="flex justify-center gap-2 md:justify-start">
-          <Link
-            href="/"
-            className="flex items-center gap-2 font-bold text-xl tracking-tight"
-          >
-            <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg">
-              <GalleryVerticalEnd className="size-5" />
+        <div className="flex justify-center gap-2 md:justify-start pt-4 md:pt-0">
+          <Link href="/" className="flex items-center">
+            <div className="relative h-6 w-auto">
+              <Image
+                src="/logo-light.svg"
+                alt="Trove Logo"
+                width={120}
+                height={35}
+                className="object-contain dark:hidden"
+                priority
+              />
+              <Image
+                src="/logo-dark.svg"
+                alt="Trove Logo"
+                width={120}
+                height={35}
+                className="object-contain hidden dark:block"
+                priority
+              />
             </div>
-            Trove
           </Link>
         </div>
-        <div className="flex flex-1 items-center justify-center">
+        <div className="flex flex-1 items-start lg:items-center justify-center py-8 lg:py-0">
           <div className="w-full max-w-sm">
             <LoginForm />
           </div>

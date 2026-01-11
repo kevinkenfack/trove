@@ -304,14 +304,11 @@ export default function SettingsPage() {
                           collections, update your information, or secure your
                           account.
                         </CardDescription>
-                        <div className="mt-8 flex flex-wrap justify-center gap-3">
-                          <Button
-                            variant="outline"
-                            onClick={() => router.push("/bookmarks")}
+                        <div className="mt-8 w-full">
+                          <Button 
+                            onClick={() => setIsAddCollectionOpen(true)}
+                            className="w-full sm:w-auto mx-auto flex items-center justify-center"
                           >
-                            Go to Dashboard
-                          </Button>
-                          <Button onClick={() => setIsAddCollectionOpen(true)}>
                             <Plus className="mr-2 size-4" /> New Collection
                           </Button>
                         </div>

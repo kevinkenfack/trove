@@ -2,8 +2,10 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 import { supabase } from "@/integrations/supabase/supabase";
-import { GalleryVerticalEnd, Loader2, Sparkles } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 export default function AuthCallback() {
@@ -52,13 +54,27 @@ export default function AuthCallback() {
     <div className="flex min-h-svh flex-col items-center justify-center bg-background relative overflow-hidden">
       <div className="flex flex-col items-center gap-10 text-center px-4 relative z-10">
         {/* Brand Logo Section */}
-        <div className="flex items-center gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <div className="bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-lg">
-            <GalleryVerticalEnd className="size-6" />
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">
-            Trove
-          </h1>
+        <div className="flex justify-center gap-2 md:justify-start pt-4 md:pt-0">
+          <Link href="/" className="flex items-center">
+            <div className="relative h-6 w-auto">
+              <Image
+                src="/logo-light.svg"
+                alt="Trove Logo"
+                width={120}
+                height={35}
+                className="object-contain dark:hidden"
+                priority
+              />
+              <Image
+                src="/logo-dark.svg"
+                alt="Trove Logo"
+                width={120}
+                height={35}
+                className="object-contain hidden dark:block"
+                priority
+              />
+            </div>
+          </Link>
         </div>
 
         {/* Status Card */}
