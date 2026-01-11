@@ -112,7 +112,7 @@ export default function SettingsPage() {
         setSession(session);
         setLoading(false);
         if (session.user) {
-          setFullName(session.user.user_metadata.full_name || "");
+          setFullName(session.user.user_metadata.full_name || session.user.user_metadata.name || "");
           setEmail(session.user.email || "");
           setAvatarUrl(session.user.user_metadata.avatar_url || "");
         }
@@ -126,6 +126,11 @@ export default function SettingsPage() {
         router.push("/login");
       } else {
         setSession(session);
+        if (session.user) {
+          setFullName(session.user.user_metadata.full_name || session.user.user_metadata.name || "");
+          setEmail(session.user.email || "");
+          setAvatarUrl(session.user.user_metadata.avatar_url || "");
+        }
       }
     });
 

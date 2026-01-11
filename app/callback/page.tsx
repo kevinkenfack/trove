@@ -4,19 +4,43 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/integrations/supabase/supabase";
 import { GalleryVerticalEnd, Loader2, Sparkles } from "lucide-react";
+import { toast } from "sonner";
 
 export default function AuthCallback() {
   const router = useRouter();
 
   useEffect(() => {
     const handleAuthCallback = async () => {
-      // Supabase handle automatically the tokens from URL hash
-      const { error } = await supabase.auth.getSession();
+      try {
+        // Supabase handle automatically the tokens from URL hash
+        const {
+          data: { session },
+          error,
+        } = await supabase.auth.getSession();
 
-      if (!error) {
-        router.push("/bookmarks");
-      } else {
-        console.error("Auth callback error:", error.message);
+        if (error) {
+          console.error("Auth callback error:", error.message);
+          toast.error("Authentication failed. Please try again.");
+          // Wait 2 seconds before redirecting on error
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          router.push("/login");
+          return;
+        }
+
+        if (session) {
+          toast.success("Successfully signed in with GitHub!");
+          // Wait 5 seconds before redirecting to show loading screen
+          await new Promise((resolve) => setTimeout(resolve, 5000));
+          router.push("/bookmarks");
+        } else {
+          // If no session, redirect to login
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          router.push("/login");
+        }
+      } catch (error: any) {
+        console.error("Unexpected error:", error);
+        toast.error("An error occurred during authentication.");
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         router.push("/login");
       }
     };

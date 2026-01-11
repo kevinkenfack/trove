@@ -75,6 +75,23 @@ export function RegisterForm({
     }
   };
 
+  const handleGitHubSignIn = async () => {
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "github",
+        options: {
+          redirectTo: `${window.location.origin}/callback`,
+        },
+      });
+
+      if (error) throw error;
+    } catch (error: any) {
+      toast.error(error.message || "Failed to sign in with GitHub");
+      setIsLoading(false);
+    }
+  };
+
   return (
     <form
       onSubmit={handleRegister}
@@ -173,6 +190,7 @@ export function RegisterForm({
             type="button"
             className="w-full"
             disabled={isLoading}
+            onClick={handleGitHubSignIn}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

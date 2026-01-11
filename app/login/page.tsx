@@ -1,6 +1,7 @@
 import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
 import { LoginForm } from "@/components/login-form";
+import { AuthHero } from "@/components/auth-hero";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -55,14 +56,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-      <div className="bg-muted relative hidden lg:block overflow-hidden border-l">
-        <img
-          src="/auth-hero.png"
-          alt="Trove Dashboard Preview"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-primary/10 backdrop-blur-[2px]" />
-      </div>
+      <AuthHero />
     </div>
   );
 }

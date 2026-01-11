@@ -123,9 +123,23 @@ export function BookmarksSidebar({
   }, []);
 
   React.useEffect(() => {
+    // Get initial user
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user);
     });
+
+    // Listen for auth changes (including OAuth callbacks)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser(session.user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleLogout = async () => {
@@ -146,10 +160,15 @@ export function BookmarksSidebar({
         <div className="flex items-center justify-between">
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-2 outline-none group">
-              <div className="size-7 rounded-full overflow-hidden bg-linear-to-br from-blue-400 via-indigo-500 to-violet-500 flex items-center justify-center ring-1 ring-white/40 shadow-lg group-hover:scale-110 transition-transform" />
+              <Avatar className="size-7 ring-1 ring-white/40 shadow-lg group-hover:scale-110 transition-transform">
+                <AvatarImage src={user?.user_metadata?.avatar_url} />
+                <AvatarFallback className="bg-linear-to-br from-blue-400 via-indigo-500 to-violet-500 text-white text-xs font-semibold">
+                  {user?.user_metadata?.full_name?.[0] || user?.user_metadata?.name?.[0] || user?.email?.[0]?.toUpperCase() || "U"}
+                </AvatarFallback>
+              </Avatar>
               <div className="flex flex-col items-start leading-none gap-0.5">
                 <span className="font-semibold text-sm truncate max-w-[100px]">
-                  {user?.user_metadata?.full_name || "User"}
+                  {user?.user_metadata?.full_name || user?.user_metadata?.name || "User"}
                 </span>
                 <span className="text-[10px] text-muted-foreground truncate max-w-[100px]">
                   {user?.email}
@@ -183,12 +202,6 @@ export function BookmarksSidebar({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Avatar className="size-6.5">
-            <AvatarImage src={user?.user_metadata?.avatar_url} />
-            <AvatarFallback className="text-[10px]">
-              {user?.email?.[0].toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
         </div>
       </SidebarHeader>
 
