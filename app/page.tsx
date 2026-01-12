@@ -16,6 +16,9 @@ import {
   Github,
   Menu,
   X,
+  Search,
+  Star,
+  Zap,
 } from "lucide-react";
 
 export default function Home() {
@@ -190,7 +193,7 @@ export default function Home() {
         {/* Dynamic Background */}
         <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-full max-w-[1000px] aspect-square bg-primary/5 rounded-full blur-[140px] -z-10 animate-pulse" />
 
-        <div className="max-w-4xl space-y-8 relative z-10">
+        <div className="max-w-6xl space-y-8 relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[10px] sm:text-xs font-bold tracking-[0.2em] border border-primary/10 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <Sparkles size={14} />
             ORGANIZE YOUR DIGITAL WORLD
@@ -202,7 +205,7 @@ export default function Home() {
             </span>{" "}
             archived.
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground animate-in fade-in slide-in-from-bottom-10 duration-1000 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-muted-foreground animate-in fade-in slide-in-from-bottom-10 duration-1000 max-w-3xl mx-auto leading-relaxed">
             The minimal bookmark manager designed for focused creators. Organize
             with elegance, synchronize with ease.
           </p>
@@ -220,7 +223,7 @@ export default function Home() {
         </div>
 
         {/* Hero Preview - Smart Light/Dark Screenshots */}
-        <div className="mt-12 w-full max-w-6xl px-4 animate-in fade-in slide-in-from-bottom-16 duration-1000">
+        <div className="mt-12 w-full max-w-7xl px-4 animate-in fade-in slide-in-from-bottom-16 duration-1000">
           <div className="relative group">
             {/* Ambient Glow */}
             <div className="absolute -inset-8 bg-primary/5 rounded-[3rem] blur-3xl opacity-0" />
@@ -244,28 +247,35 @@ export default function Home() {
         </div>
 
         {/* Feature Cards Grid */}
-        <div className="mt-32 w-full max-w-6xl px-4 grid grid-cols-1 md:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-16 duration-1000">
+        <div className="mt-32 w-full max-w-7xl px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-in fade-in slide-in-from-bottom-16 duration-1000">
           {[
+            {
+              icon: Search,
+              title: "Command Palette",
+              desc: "Press Ctrl+K to search everything instantly. Navigate, filter, and find bookmarks in milliseconds.",
+              color: "text-orange-500",
+              bg: "bg-orange-500/10",
+            },
             {
               icon: Bookmark,
               title: "Smart Collections",
-              desc: "Automatically categorize your links by project or theme.",
+              desc: "Automatically categorize your links by project or theme with custom icons and colors.",
               color: "text-blue-500",
               bg: "bg-blue-500/10",
             },
             {
               icon: Tag,
               title: "Powerful Tagging",
-              desc: "Deep tagging system to find any resource in milliseconds.",
+              desc: "Deep tagging system with color-coded tags to find any resource instantly.",
               color: "text-purple-500",
               bg: "bg-purple-500/10",
             },
             {
-              icon: Archive,
-              title: "Clean Workspace",
-              desc: "Stay focused with a clutter-free interface and smart archiving.",
-              color: "text-emerald-500",
-              bg: "bg-emerald-500/10",
+              icon: Star,
+              title: "Favorites & Archive",
+              desc: "Mark favorites for quick access, archive what you don't need, and keep your workspace clean.",
+              color: "text-yellow-500",
+              bg: "bg-yellow-500/10",
             },
           ].map((feature, i) => (
             <div
@@ -288,8 +298,8 @@ export default function Home() {
 
       {/* How It Works / Extra Info */}
       <section className="border-t bg-muted/10 py-20">
-        <div className="container mx-auto px-4 max-w-6xl space-y-12">
-          <div className="text-center space-y-3 max-w-2xl mx-auto">
+        <div className="container mx-auto px-4 max-w-7xl space-y-12">
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
               Designed for creators who live in their browser
             </h2>
@@ -301,7 +311,7 @@ export default function Home() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3 text-left">
-            <div className="space-y-3 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-background/80">
+            <div className="space-y-3 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-muted/20">
               <h3 className="text-lg font-semibold">1. Capture in one click</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Save any page to Trove with a simple action. Titles, favicons
@@ -309,7 +319,7 @@ export default function Home() {
                 clean without extra work.
               </p>
             </div>
-            <div className="space-y-3 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-background/80">
+            <div className="space-y-3 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-muted/20">
               <h3 className="text-lg font-semibold">
                 2. Organize without friction
               </h3>
@@ -319,20 +329,43 @@ export default function Home() {
                 into what matters.
               </p>
             </div>
-            <div className="space-y-3 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-background/80">
+            <div className="space-y-3 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-muted/20">
               <h3 className="text-lg font-semibold">
                 3. Find anything in seconds
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Powerful filters and search help you resurface what you saved
-                weeks ago. No hunting through history – just type, filter, and
-                open.
+                Press <kbd className="px-1.5 py-0.5 text-xs rounded border bg-muted">Ctrl+K</kbd> to open the command palette. Powerful filters, search, and instant navigation help you resurface what you saved weeks ago.
               </p>
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 border border-dashed border-border/60 rounded-2xl px-6 py-6 md:px-8 md:py-8 bg-background/60">
-            <div className="space-y-2 text-left max-w-xl">
+          {/* Why Trove Section */}
+          <div className="grid gap-6 md:grid-cols-3 text-center">
+            <div className="space-y-2 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-muted/20">
+              <Zap className="size-8 text-primary mx-auto" />
+              <h3 className="text-lg font-semibold">100% Free</h3>
+              <p className="text-sm text-muted-foreground">
+                No subscriptions, no limits. Your bookmarks, your control.
+              </p>
+            </div>
+            <div className="space-y-2 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-muted/20">
+              <Github className="size-8 text-primary mx-auto" />
+              <h3 className="text-lg font-semibold">Open Source</h3>
+              <p className="text-sm text-muted-foreground">
+                Built transparently. Contribute, fork, or customize as you need.
+              </p>
+            </div>
+            <div className="space-y-2 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-muted/20">
+              <Sparkles className="size-8 text-primary mx-auto" />
+              <h3 className="text-lg font-semibold">Auto Sync</h3>
+              <p className="text-sm text-muted-foreground">
+                Your library syncs automatically across all your devices instantly.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-dashed border-border/60 rounded-lg px-6 py-6 md:px-8 md:py-8 bg-muted/20">
+            <div className="space-y-2 text-left max-w-2xl">
               <p className="text-xs font-semibold text-primary tracking-[0.2em] uppercase">
                 READY WHEN YOU ARE
               </p>
@@ -340,7 +373,7 @@ export default function Home() {
                 Start your Trove in under a minute.
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Create an account, connect your GitHub if you like, and
+                Create a free account, connect with GitHub OAuth for instant access, and
                 you&apos;re ready to start saving the best of the web. Your
                 future self will thank you.
               </p>
