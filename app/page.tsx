@@ -2,191 +2,49 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { supabase } from "@/integrations/supabase/supabase";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { PublicHeader } from "@/components/public-header";
 import {
-  ArrowRight,
   Bookmark,
   Tag,
-  Archive,
   Sparkles,
-  Github,
-  Menu,
-  X,
   Search,
   Star,
   Zap,
+  Github,
 } from "lucide-react";
 
 export default function Home() {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        router.push("/bookmarks");
-      } else {
-        setLoading(false);
-      }
+      setSession(session);
+      setLoading(false);
     });
 
     // Listen for changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        router.push("/bookmarks");
-      }
+      setSession(session);
     });
 
     return () => subscription.unsubscribe();
-  }, [router]);
+  }, []);
 
-  if (loading && !session) {
+  if (loading) {
     return null;
   }
 
   // Landing Page View (Not Logged In)
   return (
     <div className="flex min-h-svh flex-col bg-background selection:bg-primary/20">
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 border-b bg-background/50 backdrop-blur-xl">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center">
-            <div className="relative h-6 w-auto">
-              <Image
-                src="/logo-light.svg"
-                alt="Trove Logo"
-                width={120}
-                height={35}
-                className="object-contain dark:hidden"
-                priority
-              />
-              <Image
-                src="/logo-dark.svg"
-                alt="Trove Logo"
-                width={120}
-                height={35}
-                className="object-contain hidden dark:block"
-                priority
-              />
-            </div>
-          </Link>
-          <div className="flex items-center gap-2 md:gap-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              asChild
-              className="hidden sm:flex gap-2"
-            >
-              <Link
-                href="https://github.com/kevinkenfack/trove"
-                target="_blank"
-              >
-                <Github size={18} />
-                <span>View on GitHub</span>
-              </Link>
-            </Button>
-            <div className="hidden md:flex items-center gap-2">
-              <ThemeToggle />
-              <div className="w-px h-4 bg-border mx-1" />
-              <Button asChild className="px-5">
-                <Link href="/register">Get Started</Link>
-              </Button>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setMobileMenuOpen(true)}
-              aria-label="Open menu"
-            >
-              <Menu className="size-5" />
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-md flex flex-col">
-          <div className="flex items-center justify-between px-6 py-4 border-b">
-            <Link
-              href="/"
-              className="flex items-center"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <div className="relative h-6 w-auto">
-                <Image
-                  src="/logo-light.svg"
-                  alt="Trove Logo"
-                  width={120}
-                  height={35}
-                  className="object-contain dark:hidden"
-                  priority
-                />
-                <Image
-                  src="/logo-dark.svg"
-                  alt="Trove Logo"
-                  width={120}
-                  height={35}
-                  className="object-contain hidden dark:block"
-                  priority
-                />
-              </div>
-            </Link>
-            <div className="flex items-center gap-2">
-              <ThemeToggle />
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setMobileMenuOpen(false)}
-                aria-label="Close menu"
-              >
-                <X className="size-5" />
-              </Button>
-            </div>
-          </div>
-          <div className="flex-1 flex flex-col gap-4 px-6 py-6 text-lg font-semibold">
-            <Link
-              href="/register"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-3 border-b border-border/50 hover:bg-muted/60 hover:text-primary transition-colors rounded-md px-2 -mx-2"
-            >
-              Create account
-            </Link>
-            <Link
-              href="/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-3 border-b border-border/50 hover:bg-muted/60 hover:text-primary transition-colors rounded-md px-2 -mx-2"
-            >
-              Login
-            </Link>
-            <Link
-              href="https://github.com/kevinkenfack/trove"
-              target="_blank"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-3 border-b border-border/50 flex items-center gap-2 hover:bg-muted/60 hover:text-primary transition-colors rounded-md px-2 -mx-2"
-            >
-              <Github className="size-5" />
-              View on GitHub
-            </Link>
-            <div className="pt-2">
-              <Button className="w-full" asChild>
-                <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
-                  Get Started
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <PublicHeader currentPath="/" />
 
       {/* Hero Section */}
       <section className="flex-1 flex flex-col items-center pt-32 pb-24 px-4 text-center relative overflow-hidden gap-10 md:gap-14">
@@ -247,63 +105,78 @@ export default function Home() {
         </div>
 
         {/* Feature Cards Grid */}
-        <div className="mt-32 w-full max-w-7xl px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-in fade-in slide-in-from-bottom-16 duration-1000">
-          {[
-            {
-              icon: Search,
-              title: "Command Palette",
-              desc: "Press Ctrl+K to search everything instantly. Navigate, filter, and find bookmarks in milliseconds.",
-              color: "text-orange-500",
-              bg: "bg-orange-500/10",
-            },
-            {
-              icon: Bookmark,
-              title: "Smart Collections",
-              desc: "Automatically categorize your links by project or theme with custom icons and colors.",
-              color: "text-blue-500",
-              bg: "bg-blue-500/10",
-            },
-            {
-              icon: Tag,
-              title: "Powerful Tagging",
-              desc: "Deep tagging system with color-coded tags to find any resource instantly.",
-              color: "text-purple-500",
-              bg: "bg-purple-500/10",
-            },
-            {
-              icon: Star,
-              title: "Favorites & Archive",
-              desc: "Mark favorites for quick access, archive what you don't need, and keep your workspace clean.",
-              color: "text-yellow-500",
-              bg: "bg-yellow-500/10",
-            },
-          ].map((feature, i) => (
-            <div
-              key={i}
-              className="group p-8 rounded-lg bg-muted/20 backdrop-blur-sm border border-border/50 hover:border-primary/20 transition-all hover:translate-y-[-4px] text-left"
-            >
+        <div className="mt-32 w-full max-w-7xl px-4 space-y-8">
+          <div className="text-center space-y-4">
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-foreground leading-[0.95]">
+              Everything you need to{" "}
+              <span className="italic font-serif text-primary/80">
+                organize
+              </span>
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Powerful features designed to help you capture, organize, and find
+              your digital resources effortlessly.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-in fade-in slide-in-from-bottom-16 duration-1000">
+            {[
+              {
+                icon: Search,
+                title: "Command Palette",
+                desc: "Press Ctrl+K to search everything instantly. Navigate, filter, and find bookmarks in milliseconds.",
+                color: "text-orange-500",
+                bg: "bg-orange-500/10",
+              },
+              {
+                icon: Bookmark,
+                title: "Smart Collections",
+                desc: "Automatically categorize your links by project or theme with custom icons and colors.",
+                color: "text-blue-500",
+                bg: "bg-blue-500/10",
+              },
+              {
+                icon: Tag,
+                title: "Powerful Tagging",
+                desc: "Deep tagging system with color-coded tags to find any resource instantly.",
+                color: "text-purple-500",
+                bg: "bg-purple-500/10",
+              },
+              {
+                icon: Star,
+                title: "Favorites & Archive",
+                desc: "Mark favorites for quick access, archive what you don't need, and keep your workspace clean.",
+                color: "text-yellow-500",
+                bg: "bg-yellow-500/10",
+              },
+            ].map((feature, i) => (
               <div
-                className={`size-12 rounded-2xl ${feature.bg} ${feature.color} flex items-center justify-center mb-6`}
+                key={i}
+                className="group p-8 rounded-lg bg-muted/20 backdrop-blur-sm border border-border/50 hover:border-primary/20 transition-all hover:translate-y-[-4px] text-left"
               >
-                <feature.icon size={24} />
+                <div
+                  className={`size-12 rounded-2xl ${feature.bg} ${feature.color} flex items-center justify-center mb-6`}
+                >
+                  <feature.icon size={24} />
+                </div>
+                <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {feature.desc}
+                </p>
               </div>
-              <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {feature.desc}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* How It Works / Extra Info */}
       <section className="border-t bg-muted/10 py-20">
         <div className="container mx-auto px-4 max-w-7xl space-y-12">
-          <div className="text-center space-y-3 max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-              Designed for creators who live in their browser
+          <div className="text-center space-y-6 max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-foreground leading-[0.95]">
+              Designed for creators who live in their{" "}
+              <span className="italic font-serif text-primary/80">browser</span>
             </h2>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
               Trove keeps your best articles, tools, and inspiration one
               shortcut away. No more messy tabs or lost links – just a calm,
               searchable library that grows with you.
@@ -334,7 +207,12 @@ export default function Home() {
                 3. Find anything in seconds
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Press <kbd className="px-1.5 py-0.5 text-xs rounded border bg-muted">Ctrl+K</kbd> to open the command palette. Powerful filters, search, and instant navigation help you resurface what you saved weeks ago.
+                Press{" "}
+                <kbd className="px-1.5 py-0.5 text-xs rounded border bg-muted">
+                  Ctrl+K
+                </kbd>{" "}
+                to open the command palette. Powerful filters, search, and
+                instant navigation help you resurface what you saved weeks ago.
               </p>
             </div>
           </div>
@@ -359,7 +237,8 @@ export default function Home() {
               <Sparkles className="size-8 text-primary mx-auto" />
               <h3 className="text-lg font-semibold">Auto Sync</h3>
               <p className="text-sm text-muted-foreground">
-                Your library syncs automatically across all your devices instantly.
+                Your library syncs automatically across all your devices
+                instantly.
               </p>
             </div>
           </div>
@@ -373,9 +252,9 @@ export default function Home() {
                 Start your Trove in under a minute.
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Create a free account, connect with GitHub OAuth for instant access, and
-                you&apos;re ready to start saving the best of the web. Your
-                future self will thank you.
+                Create a free account, connect with GitHub OAuth for instant
+                access, and you&apos;re ready to start saving the best of the
+                web. Your future self will thank you.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
@@ -419,6 +298,12 @@ export default function Home() {
             </div>
           </div>
           <div className="flex gap-6 text-sm text-muted-foreground font-medium">
+            <Link
+              href="/roadmap"
+              className="hover:text-primary transition-colors"
+            >
+              Roadmap
+            </Link>
             <Link href="#" className="hover:text-primary transition-colors">
               Twitter
             </Link>
