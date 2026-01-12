@@ -14,11 +14,14 @@ import {
   Archive,
   Sparkles,
   Github,
+  Menu,
+  X,
 } from "lucide-react";
 
 export default function Home() {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -80,22 +83,110 @@ export default function Home() {
               asChild
               className="hidden sm:flex gap-2"
             >
-              <Link href="https://github.com/kevinkenfack/trove" target="_blank">
+              <Link
+                href="https://github.com/kevinkenfack/trove"
+                target="_blank"
+              >
                 <Github size={18} />
                 <span>View on GitHub</span>
               </Link>
             </Button>
-            <ThemeToggle />
-            <div className="w-px h-4 bg-border mx-1 hidden sm:block" />
-            <Button size="sm" asChild className="px-5">
-              <Link href="/register">Get Started</Link>
+            <div className="hidden md:flex items-center gap-2">
+              <ThemeToggle />
+              <div className="w-px h-4 bg-border mx-1" />
+              <Button asChild className="px-5">
+                <Link href="/register">Get Started</Link>
+              </Button>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu className="size-5" />
             </Button>
           </div>
         </div>
       </header>
 
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-md flex flex-col">
+          <div className="flex items-center justify-between px-6 py-4 border-b">
+            <Link
+              href="/"
+              className="flex items-center"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <div className="relative h-6 w-auto">
+                <Image
+                  src="/logo-light.svg"
+                  alt="Trove Logo"
+                  width={120}
+                  height={35}
+                  className="object-contain dark:hidden"
+                  priority
+                />
+                <Image
+                  src="/logo-dark.svg"
+                  alt="Trove Logo"
+                  width={120}
+                  height={35}
+                  className="object-contain hidden dark:block"
+                  priority
+                />
+              </div>
+            </Link>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                <X className="size-5" />
+              </Button>
+            </div>
+          </div>
+          <div className="flex-1 flex flex-col gap-4 px-6 py-6 text-lg font-semibold">
+            <Link
+              href="/register"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-3 border-b border-border/50 hover:bg-muted/60 hover:text-primary transition-colors rounded-md px-2 -mx-2"
+            >
+              Create account
+            </Link>
+            <Link
+              href="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-3 border-b border-border/50 hover:bg-muted/60 hover:text-primary transition-colors rounded-md px-2 -mx-2"
+            >
+              Login
+            </Link>
+            <Link
+              href="https://github.com/kevinkenfack/trove"
+              target="_blank"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-3 border-b border-border/50 flex items-center gap-2 hover:bg-muted/60 hover:text-primary transition-colors rounded-md px-2 -mx-2"
+            >
+              <Github className="size-5" />
+              View on GitHub
+            </Link>
+            <div className="pt-2">
+              <Button className="w-full" asChild>
+                <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
+                  Get Started
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
-      <section className="flex-1 flex flex-col items-center pt-32 pb-20 px-4 text-center relative overflow-hidden">
+      <section className="flex-1 flex flex-col items-center pt-32 pb-24 px-4 text-center relative overflow-hidden gap-10 md:gap-14">
         {/* Dynamic Background */}
         <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-full max-w-[1000px] aspect-square bg-primary/5 rounded-full blur-[140px] -z-10 animate-pulse" />
 
@@ -115,18 +206,15 @@ export default function Home() {
             The minimal bookmark manager designed for focused creators. Organize
             with elegance, synchronize with ease.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-in fade-in slide-in-from-bottom-12 duration-1000">
+          <div className="flex flex-row flex-wrap items-center justify-center gap-3 pt-4 animate-in fade-in slide-in-from-bottom-12 duration-1000">
             <Button
               className="px-5 h-12 text-md font-bold tracking-tight rounded-lg"
               asChild
             >
-              <Link href="/register">
-                Start your library
-                <ArrowRight
-                  size={20}
-                  className="ml-2 group-hover:translate-x-1 transition-transform"
-                />
-              </Link>
+              <Link href="/register">Get Started</Link>
+            </Button>
+            <Button variant="outline" className="h-12 px-5" asChild>
+              <Link href="/login">Login</Link>
             </Button>
           </div>
         </div>
@@ -182,7 +270,7 @@ export default function Home() {
           ].map((feature, i) => (
             <div
               key={i}
-              className="group p-8 rounded-lg bg-card/40 backdrop-blur-sm border border-border/50 hover:border-primary/20 transition-all hover:translate-y-[-4px] text-left"
+              className="group p-8 rounded-lg bg-muted/20 backdrop-blur-sm border border-border/50 hover:border-primary/20 transition-all hover:translate-y-[-4px] text-left"
             >
               <div
                 className={`size-12 rounded-2xl ${feature.bg} ${feature.color} flex items-center justify-center mb-6`}
@@ -195,6 +283,84 @@ export default function Home() {
               </p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* How It Works / Extra Info */}
+      <section className="border-t bg-muted/10 py-20">
+        <div className="container mx-auto px-4 max-w-6xl space-y-12">
+          <div className="text-center space-y-3 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+              Designed for creators who live in their browser
+            </h2>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+              Trove keeps your best articles, tools, and inspiration one
+              shortcut away. No more messy tabs or lost links – just a calm,
+              searchable library that grows with you.
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3 text-left">
+            <div className="space-y-3 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-background/80">
+              <h3 className="text-lg font-semibold">1. Capture in one click</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Save any page to Trove with a simple action. Titles, favicons
+                and metadata are enriched automatically so your library stays
+                clean without extra work.
+              </p>
+            </div>
+            <div className="space-y-3 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-background/80">
+              <h3 className="text-lg font-semibold">
+                2. Organize without friction
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Group links into collections, add tags, and mark favorites.
+                Trove&apos;s smart layout makes it easy to scan and jump back
+                into what matters.
+              </p>
+            </div>
+            <div className="space-y-3 p-6 rounded-lg border border-border/50 hover:border-primary/20 bg-background/80">
+              <h3 className="text-lg font-semibold">
+                3. Find anything in seconds
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Powerful filters and search help you resurface what you saved
+                weeks ago. No hunting through history – just type, filter, and
+                open.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 border border-dashed border-border/60 rounded-2xl px-6 py-6 md:px-8 md:py-8 bg-background/60">
+            <div className="space-y-2 text-left max-w-xl">
+              <p className="text-xs font-semibold text-primary tracking-[0.2em] uppercase">
+                READY WHEN YOU ARE
+              </p>
+              <h3 className="text-xl md:text-2xl font-bold tracking-tight">
+                Start your Trove in under a minute.
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Create an account, connect your GitHub if you like, and
+                you&apos;re ready to start saving the best of the web. Your
+                future self will thank you.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+              <Button
+                className="w-full sm:w-auto h-11 px-5 font-semibold"
+                asChild
+              >
+                <Link href="/register">Create your free account</Link>
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full sm:w-auto h-11 px-5"
+                asChild
+              >
+                <Link href="/login">I already have an account</Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -229,9 +395,6 @@ export default function Home() {
               className="hover:text-primary transition-colors"
             >
               GitHub
-            </Link>
-            <Link href="#" className="hover:text-primary transition-colors">
-              Privacy
             </Link>
           </div>
           <p className="text-xs text-muted-foreground/50 tabular-nums">

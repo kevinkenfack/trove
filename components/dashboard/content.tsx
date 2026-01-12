@@ -16,8 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { filterOptions, sortOptions } from "./header";
-import { cn } from "@/lib/utils";
+import { filterOptions, sortOptions } from "./header";;
 
 export function BookmarksContent() {
   const {
