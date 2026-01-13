@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/supabase";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -29,6 +29,25 @@ export function LoginForm({
   const [useMagicLink, setUseMagicLink] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        router.push("/bookmarks");
+      }
+    };
+    
+    checkSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        router.push("/bookmarks");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [router]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -63,15 +82,16 @@ export function LoginForm({
       // Validation Zod for password login
       loginSchema.parse({ email, password });
 
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) throw error;
 
-      toast.success("Welcome back!");
-      router.push("/");
+      const firstName = data.user?.user_metadata?.full_name?.split(" ")[0] || "there";
+      toast.success(`Welcome back, ${firstName}! 👋`);
+      router.push("/bookmarks");
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         const newErrors: Record<string, string> = {};
