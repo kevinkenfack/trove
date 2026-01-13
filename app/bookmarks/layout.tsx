@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Bookmarks - Trove",
+  title: "Bookmarks | Trove",
   description: "View and manage your bookmarks in your personal library.",
 };
 

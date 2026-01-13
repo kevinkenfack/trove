@@ -18,7 +18,7 @@ export function PublicHeader({ currentPath = "/" }: PublicHeaderProps) {
     <>
       {/* Header */}
       <header className="fixed top-0 w-full z-50 border-b bg-background/50 backdrop-blur-xl">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="container max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center h-full">
             <div className="relative h-full flex items-center">
               <Image

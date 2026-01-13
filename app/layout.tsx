@@ -16,11 +16,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Trove - Bookmarks Manager",
+  title: "Trove | Bookmarks Manager",
   description:
     "A simple and elegant bookmarks manager to organize your web discoveries.",
   openGraph: {
-    title: "Trove - Bookmarks Manager",
+    title: "Trove | Bookmarks Manager",
     description:
       "A simple and elegant bookmarks manager to organize your web discoveries.",
     url: process.env.NEXT_PUBLIC_APP_URL,
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Trove - Bookmarks Manager",
+    title: "Trove | Bookmarks Manager",
     description:
       "A simple and elegant bookmarks manager to organize your web discoveries.",
     images: ["/og-image.png"],

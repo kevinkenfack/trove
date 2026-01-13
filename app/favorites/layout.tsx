@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Favorites - Trove",
+  title: "Favorites | Trove",
 };
 
 export default function FavoritesLayout({

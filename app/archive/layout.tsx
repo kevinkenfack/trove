@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Archive - Trove",
+  title: "Archive | Trove",
 };
 
 export default function ArchiveLayout({

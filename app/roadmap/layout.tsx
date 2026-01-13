@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Roadmap - Trove",
+  title: "Roadmap | Trove",
   description: "Discover what's already available and what's coming next.",
   openGraph: {
-    title: "Roadmap - Trove",
+    title: "Roadmap | Trove",
     description: "Discover what's already available and what's coming next.",
     type: "website",
     siteName: "Trove",
-    url: process.env.NEXT_PUBLIC_APP_URL,
+    url: `${process.env.NEXT_PUBLIC_APP_URL}/roadmap`,
     images: [
       {
         url: `/og-image.png`,
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Roadmap - Trove",
+    title: "Roadmap | Trove",
     description: "Discover what's already available and what's coming next.",
     images: [
       {

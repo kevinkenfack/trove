@@ -5,16 +5,16 @@ import { Metadata } from "next";
 import { AuthHero } from "@/components/auth-hero";
 
 export const metadata: Metadata = {
-  title: "Register - Trove",
+  title: "Register | Trove",
   description:
     "Create your Trove account and start organizing your digital library today.",
   openGraph: {
-    title: "Register - Trove",
+    title: "Register | Trove",
     description:
       "Create your Trove account and start organizing your digital library today.",
     type: "website",
     siteName: "Trove",
-    url: process.env.NEXT_PUBLIC_APP_URL,
+    url: `${process.env.NEXT_PUBLIC_APP_URL}/register`,
     images: [
       {
         url: `/og-image.png`,
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Register - Trove",
+    title: "Register | Trove",
     description:
       "Create your Trove account and start organizing your digital library today.",
     images: ["/og-image.png"],

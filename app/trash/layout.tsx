@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Trash - Trove",
+  title: "Trash | Trove",
 };
 
 export default function TrashLayout({

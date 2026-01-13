@@ -6,6 +6,7 @@ import Image from "next/image";
 import { supabase } from "@/integrations/supabase/supabase";
 import { Button } from "@/components/ui/button";
 import { PublicHeader } from "@/components/public-header";
+import Footer from "@/components/public-footer";
 import {
   Bookmark,
   Tag,
@@ -81,13 +82,13 @@ export default function Home() {
         </div>
 
         {/* Hero Preview - Smart Light/Dark Screenshots */}
-        <div className="mt-12 w-full max-w-7xl px-4 animate-in fade-in slide-in-from-bottom-16 duration-1000">
+        <div className="mt-12 w-full max-w-7xl px-0 sm:px-4 animate-in fade-in slide-in-from-bottom-16 duration-1000">
           <div className="relative group">
             {/* Ambient Glow */}
-            <div className="absolute -inset-8 bg-primary/5 rounded-[3rem] blur-3xl opacity-0" />
+            <div className="absolute -inset-8 bg-primary/5 blur-3xl opacity-0" />
 
             {/* Main Screenshot Container */}
-            <div className="relative rounded-2xl overflow-hidden border border-border/50">
+            <div className="relative shadow-2xl shadow-primary/5">
               {/* Light Mode Screenshot */}
               <img
                 src="/dashboard-light.png"
@@ -277,49 +278,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-16 bg-muted/20">
-        <div className="container mx-auto px-4 flex flex-col items-center gap-6">
-          <div className="flex items-center opacity-80">
-            <div className="relative h-6 w-auto">
-              <Image
-                src="/logo-light.svg"
-                alt="Trove Logo"
-                width={120}
-                height={35}
-                className="object-contain dark:hidden"
-              />
-              <Image
-                src="/logo-dark.svg"
-                alt="Trove Logo"
-                width={120}
-                height={35}
-                className="object-contain hidden dark:block"
-              />
-            </div>
-          </div>
-          <div className="flex gap-6 text-sm text-muted-foreground font-medium">
-            <Link
-              href="/roadmap"
-              className="hover:text-primary transition-colors"
-            >
-              Roadmap
-            </Link>
-            <Link href="#" className="hover:text-primary transition-colors">
-              Twitter
-            </Link>
-            <Link
-              href="https://github.com/kevinkenfack/trove"
-              target="_blank"
-              className="hover:text-primary transition-colors"
-            >
-              GitHub
-            </Link>
-          </div>
-          <p className="text-xs text-muted-foreground/50 tabular-nums">
-            © {new Date().getFullYear()} Trove. Designed for focus.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
