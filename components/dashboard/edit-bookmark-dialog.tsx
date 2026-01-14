@@ -186,23 +186,23 @@ export function EditBookmarkDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[540px] p-0 overflow-hidden border-border/40 shadow-2xl bg-background">
+      <DialogContent className="sm:max-w-[650px] p-0 overflow-hidden border-border/40 shadow-2xl bg-background">
         <DialogHeader className="px-8 pt-8 pb-5 text-left border-b border-border/40 bg-muted/5">
           <DialogTitle className="text-2xl font-bold tracking-tight">Edit Bookmark</DialogTitle>
           <DialogDescription className="text-muted-foreground text-sm">
             Modify your bookmark details. Changes are saved instantly.
           </DialogDescription>
         </DialogHeader>
-        <div className="px-8 py-2">
+        <div className="px-8 py-6">
           {formFields}
         </div>
-        <DialogFooter className="px-8 py-6 gap-2 border-t border-border/40 bg-muted/5">
+        <DialogFooter className="px-8 py-6 gap-3 border-t border-border/40 bg-muted/5">
           <Button
             type="button"
             variant="secondary"
             size="sm"
             onClick={() => onOpenChange(false)}
-            className="font-medium"
+            className="font-medium h-10 px-6"
           >
             Cancel
           </Button>
@@ -210,7 +210,7 @@ export function EditBookmarkDialog({
             onClick={handleSubmit} 
             disabled={loading}
             size="sm"
-            className="min-w-[120px] font-bold"
+            className="min-w-[140px] font-bold h-10"
           >
             {loading ? "Saving..." : "Save Changes"}
           </Button>

@@ -190,7 +190,7 @@ export function AddTagsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[420px] p-0 overflow-hidden border-border/40 shadow-2xl bg-background">
+      <DialogContent className="sm:max-w-[650px] p-0 overflow-hidden border-border/40 shadow-2xl bg-background">
         <DialogHeader className="px-8 pt-8 pb-5 text-left border-b border-border/40 bg-muted/5">
           <DialogTitle className="text-2xl font-bold tracking-tight">Add Tags</DialogTitle>
           <DialogDescription className="text-muted-foreground text-sm">
