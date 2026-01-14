@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Github, Menu, X } from "lucide-react";
+import { LanguageToggle } from "./translation-toggle";
 
 interface PublicHeaderProps {
   currentPath?: string;
@@ -54,12 +55,16 @@ export function PublicHeader({ currentPath = "/" }: PublicHeaderProps) {
                 <span>View on GitHub</span>
               </Link>
             </Button>
+             <Button asChild className="cursor-pointer px-5">
+                <LanguageToggle />
+              </Button>
             <div className="hidden md:flex items-center gap-2">
               <ThemeToggle />
               <div className="w-px h-4 bg-border mx-1" />
               <Button asChild className="px-5">
                 <Link href="/register">Get Started</Link>
               </Button>
+             
             </div>
             <Button
               variant="ghost"

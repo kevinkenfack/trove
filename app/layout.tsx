@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import PWAInstallPrompt from "@/components/pwa-prompt";
 import "./globals.css";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-sans",
@@ -80,6 +81,18 @@ export default function RootLayout({
             }}
           />
         </ThemeProvider>
+        {/* GTranslate - Use dropdown.js which provides doGTranslate function */}
+        {/* The wrapper will contain a hidden <select> element that we override with our custom UI */}
+        <div className="gtranslate_wrapper"></div>
+        <Script id="gtranslate-settings" strategy="beforeInteractive">
+          {`window.gtranslateSettings = {"default_language":"en","native_language_names":true,"detect_browser_language":false,"languages":["en","fr","es","ja","zh-CN"],"wrapper_selector":".gtranslate_wrapper"}`}
+        </Script>
+        <Script
+          src="https://cdn.gtranslate.net/widgets/latest/dropdown.js"
+          strategy="afterInteractive"
+        />
+        {/* Hide the default GTranslate dropdown - we use our custom UI instead */}
+        <style>{`.gtranslate_wrapper { position: absolute; left: -9999px; visibility: hidden; }`}</style>
       </body>
     </html>
   );
